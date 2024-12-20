@@ -13,10 +13,12 @@ namespace RestaurantManagementAPI.Seeders
 
             if (dbContext.Database.CanConnect())
             {
-                var pendingMigrations = dbContext.Database.GetPendingMigrations();
-                if (pendingMigrations != null && pendingMigrations.Any())
+                if (dbContext.Database.IsRelational())
                 {
-                    dbContext.Database.Migrate();
+                    var pendingMigrations = dbContext.Database.GetPendingMigrations();
+
+                    if (pendingMigrations != null && pendingMigrations.Any())
+                        dbContext.Database.Migrate();
                 }
                 if (dbContext.Dishes.Any())
                     return;
