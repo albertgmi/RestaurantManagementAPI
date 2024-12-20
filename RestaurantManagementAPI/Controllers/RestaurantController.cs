@@ -40,7 +40,7 @@ namespace RestaurantManagementAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Atleast2restaurants")]
+        [AllowAnonymous]
         public ActionResult<PagedResult<RestaurantDto>> GetAll([FromQuery] RestaurantQuery query)
         {
             var restaurantsDtos = _service.GetAll(query);
