@@ -110,3 +110,5 @@ var dataSeeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
 dataSeeder.Seed(dbContext);
 
 app.Run();
+
+public partial class Program { }
