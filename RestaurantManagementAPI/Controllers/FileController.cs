@@ -28,7 +28,7 @@ namespace RestaurantManagementAPI.Controllers
             return File(fileContent, contentType, fileName);
         }
         [HttpPost]
-        public ActionResult Upload([FromForm] IFormFile file)
+        public ActionResult Upload(IFormFile file)
         {
             if (file != null && file.Length > 0)
             {

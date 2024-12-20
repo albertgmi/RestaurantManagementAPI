@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.IdentityModel.Tokens;
 using RestaurantManagementAPI.Entities;
 
 namespace RestaurantManagementAPI.Models.Validators

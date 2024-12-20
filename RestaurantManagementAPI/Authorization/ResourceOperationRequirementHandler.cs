@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using RestaurantManagementAPI.Entities;
+using System.Security.Claims;
 
 namespace RestaurantManagementAPI.Authorization
 {

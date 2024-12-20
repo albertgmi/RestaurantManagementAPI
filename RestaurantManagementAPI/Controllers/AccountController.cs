@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestaurantManagementAPI.Models;
+using RestaurantManagementAPI.Services.UserServiceFolder;
 
 namespace RestaurantManagementAPI.Controllers
 {

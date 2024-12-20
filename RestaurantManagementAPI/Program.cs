@@ -1,24 +1,23 @@
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
-using RestaurantAPI;
-using RestaurantAPI.Entities;
+using RestaurantManagementAPI;
+using RestaurantManagementAPI.Entities;
 using System.Text.Json.Serialization;
 using NLog.Web;
-using RestaurantAPI.Middleware;
+using RestaurantManagementAPI.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using FluentValidation;
-using RestaurantAPI.Models;
-using RestaurantAPI.Models.Validators;
+using RestaurantManagementAPI.Models;
+using RestaurantManagementAPI.Models.Validators;
 using FluentValidation.AspNetCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using RestaurantAPI.Authorization;
+using RestaurantManagementAPI.Authorization;
 using Microsoft.AspNetCore.Authorization;
-using RestaurantAPI.Services.UserFolder;
-using RestaurantAPI.Seeders;
-using RestaurantAPI.Services.RestaurantServiceFolder;
-using RestaurantAPI.Services.DishServiceFolder;
-using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using RestaurantManagementAPI.Services.UserServiceFolder;
+using RestaurantManagementAPI.Seeders;
+using RestaurantManagementAPI.Services.RestaurantServiceFolder;
+using RestaurantManagementAPI.Services.DishServiceFolder;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,7 +54,7 @@ builder.Services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHa
 builder.Services.AddScoped<IAuthorizationHandler, AtleastTwoRestaurantsHandler>();
 builder.Services.AddSingleton(authenticationSettings);
 builder.Services.AddControllers().AddFluentValidation();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<IDishService, DishService>();
 builder.Services.AddScoped<IUserService, UserService>();
