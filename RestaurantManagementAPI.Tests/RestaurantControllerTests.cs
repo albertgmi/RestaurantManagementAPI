@@ -1,10 +1,15 @@
-﻿using FluentAssertions;
+﻿using Bogus.DataSets;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Newtonsoft.Json;
 using RestaurantManagementAPI.Entities;
+using RestaurantManagementAPI.Models;
+using System.IO;
 using System.Net;
+using System.Text;
 using Xunit.Abstractions;
 
 namespace RestaurantManagementAPI.Tests
@@ -58,6 +63,24 @@ namespace RestaurantManagementAPI.Tests
 
             // assert
             result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+        [Fact]
+        public async Task CreateRestaurant_WithValidModel_ReturnsCreatedStatusCode()
+        {
+            // arrange
+            var query = new CreateRestaurantDto()
+            {
+                Name = "TestRestaurant",
+                City = "Warszawa",
+                Street = "Nowoursynowska"
+            };
+            var json = JsonConvert.SerializeObject(query);
+            var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            // act
+            var response = await _client.PostAsync("api/restaurant", httpContent);
+            // assert
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
+            response.Headers.Location.Should().NotBeNull();
         }
     }
 }
