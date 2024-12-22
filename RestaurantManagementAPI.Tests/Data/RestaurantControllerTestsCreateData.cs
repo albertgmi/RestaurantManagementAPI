@@ -1,7 +1,7 @@
 ﻿using RestaurantManagementAPI.Models;
 using System.Collections;
 
-namespace RestaurantManagementAPI.Tests
+namespace RestaurantManagementAPI.Tests.Data
 {
     public class RestaurantControllerTestsCreateData : IEnumerable<object[]>
     {
