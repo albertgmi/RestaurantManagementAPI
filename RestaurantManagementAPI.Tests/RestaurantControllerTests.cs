@@ -1,5 +1,6 @@
 ﻿using Bogus.DataSets;
 using FluentAssertions;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
@@ -29,6 +30,9 @@ namespace RestaurantManagementAPI.Tests
                                     service.ServiceType == typeof(DbContextOptions<RestaurantDbContext>));
 
                         services.Remove(dbContextOptions);
+
+                        services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
+                        services.AddMvc(x => x.Filters.Add(new FakeUserFilter()));
 
                         services
                         .AddDbContext<RestaurantDbContext>(options => options.UseInMemoryDatabase("RestaurantDb"));
@@ -64,16 +68,11 @@ namespace RestaurantManagementAPI.Tests
             // assert
             result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
-        [Fact]
-        public async Task CreateRestaurant_WithValidModel_ReturnsCreatedStatusCode()
+        [Theory]
+        [ClassData(typeof(RestaurantControllerTestsCreateData))]
+        public async Task CreateRestaurant_WithValidModel_ReturnsCreatedStatusCode(CreateRestaurantDto query)
         {
             // arrange
-            var query = new CreateRestaurantDto()
-            {
-                Name = "TestRestaurant",
-                City = "Warszawa",
-                Street = "Nowoursynowska"
-            };
             var json = JsonConvert.SerializeObject(query);
             var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             // act
