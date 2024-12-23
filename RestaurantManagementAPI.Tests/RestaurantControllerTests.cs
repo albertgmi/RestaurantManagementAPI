@@ -126,11 +126,11 @@ namespace RestaurantManagementAPI.Tests
             // assert
             response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
         }
-        private Guid AddCreatedRestaurantToDbContext(Guid restaurantId)
+        private Guid AddCreatedRestaurantToDbContext(Guid createdById)
         {
             var restaurant = new Restaurant()
             {
-                CreatedById = restaurantId,
+                CreatedById = createdById,
                 Name = "Test"
             };
 
