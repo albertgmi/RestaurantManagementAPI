@@ -11,7 +11,7 @@ namespace RestaurantManagementAPI.Tests
             claimsPrincipal.AddIdentity(new ClaimsIdentity(
                 new[]
                 {
-                new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, "c1f7d8a4-bb6f-426d-98c2-5f34e7a62a8c"),
                 new Claim(ClaimTypes.Role, "Admin")
                 }));
             context.HttpContext.User = claimsPrincipal;
